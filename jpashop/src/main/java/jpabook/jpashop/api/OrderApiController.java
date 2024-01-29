@@ -57,6 +57,24 @@ public class OrderApiController {
         return collect;
     }
 
+    /**
+     * V3. 엔티티를 조회해서 DTO로 변환 (fetch join 사용 o)
+     * - 페이징 시에는 N 부분을 포기해야함 (대신에 batch fetch size? 옵션 주면 N -> 1 쿼리로 변경 가능)
+     * - 원래 distinct를 추가해 중복을 제거 해야 하지만 Hibernate 6.0 이상 부터는 자동으로 distinct가 추가됨
+     * - 페이징이 불가능
+     * - 컬렉션 fetch join은 1개만 사용 가능
+     */
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDto> collect = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+
+        return collect;
+    }
+
+
     @Data
     static class OrderDto {
 
