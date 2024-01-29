@@ -28,6 +28,11 @@ public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
     private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
+    /**
+     * V1. 엔티티 직접 노출
+     * - Hibernate5Module 모듈 등록, LAZY=null 처리
+     * - 양방향 관계 문제 발생 -> @JsonIgnore
+     */
     @GetMapping("/api/v1/simple-orders")
     public List<Order> orderV1() {
         List<Order> all = orderRepository.findAll(new OrderSearch());
@@ -38,6 +43,11 @@ public class OrderSimpleApiController {
         return all;
     }
 
+    /**
+     * V2. 엔티티를 조회해서 DTO로 변환 (fetch join 사용 x)
+     * - 단점: 지연 로딩으로 쿼리 N번 호출
+     * @return
+     */
     @GetMapping("/api/v2/simple-orders")
     public List<SimpleOrderDto> orderV2() {
         List<Order> orders = orderRepository.findAll(new OrderSearch());
@@ -48,6 +58,10 @@ public class OrderSimpleApiController {
         return result;
     }
 
+    /**
+     * V3. 엔티티를 조회해서 DTO로 변환(fetch join 사용 o)
+     * - fetch join으로 쿼리 1번 호출
+     */
     @GetMapping("/api/v3/simple-orders")
     public List<SimpleOrderDto> orderV3() {
         List<Order> orders = orderRepository.findAllWithMemberDelivery();
