@@ -22,4 +22,6 @@ public class OrderSimpleQueryDto{
         this.orderStatus = orderStatus;
         this.address = address;
     }
+
+
 }
