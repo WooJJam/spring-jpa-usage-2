@@ -1,8 +1,10 @@
 package jpabook.jpashop.repository.order.query;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter @Setter
 public class OrderItemQueryDto {
 
     private Long orderId;
