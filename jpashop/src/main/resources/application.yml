@@ -13,6 +13,9 @@ spring:
 #        show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
+#    open-in-view: false # OSIV off
+# OSIC off :
+  # - 모든 지연 로딩 로직을 트랜잭션 안에서 구현 하거나 fetch join을 사용
 
 logging:
   level:
