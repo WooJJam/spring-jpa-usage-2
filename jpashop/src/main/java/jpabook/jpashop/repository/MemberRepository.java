@@ -1,2 +1,10 @@
-package jpabook.jpashop.repository;public interface MemberRepository {
+package jpabook.jpashop.repository;
+
+import jpabook.jpashop.domain.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    List<Member> findByName(String findName);
 }
